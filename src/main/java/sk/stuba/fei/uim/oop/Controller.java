@@ -18,15 +18,9 @@ public class Controller implements KeyListener {
     Random rand = new Random();
     ArrayList<Block> blocks = new ArrayList<>();
     ArrayList<Block> snake = new ArrayList<>();
-    int delay = 1000;
-    ActionListener taskPerformer = new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
-            // check direction and add move head and delete last tile of snake...
-            //...Perform a task...
-        }
-    };
-
-
+    Canvas canvas = new Canvas();
+    MainFrame frame = new MainFrame(canvas);
+    int cas =0;
     enum Direction {
         UP,
         DOWN,
@@ -34,6 +28,20 @@ public class Controller implements KeyListener {
         RIGHT
     }
     Direction direction = Direction.RIGHT;
+    int delay = 1000;
+    ActionListener taskPerformer = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+
+            System.out.println(cas++);
+            canvas.setX(canvas.getX()+10);
+            canvas.repaint();
+            // check direction and add move head and delete last tile of snake...
+            //...Perform a task...
+        }
+    };
+
+
+
 
 
     public Controller() {

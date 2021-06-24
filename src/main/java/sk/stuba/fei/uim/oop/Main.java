@@ -2,6 +2,6 @@ package sk.stuba.fei.uim.oop;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(20/20);
+        new Controller();    System.out.println(20/20);
     }
 }
