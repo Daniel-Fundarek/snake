@@ -18,6 +18,7 @@ public class Controller implements KeyListener {
     Random rand = new Random();
     ArrayList<Block> blocks = new ArrayList<>();
     ArrayList<Block> snake = new ArrayList<>();
+    ArrayList<Block> board = new ArrayList<>();
     Canvas canvas = new Canvas();
     MainFrame frame = new MainFrame(canvas);
     int cas =0;
@@ -31,7 +32,6 @@ public class Controller implements KeyListener {
     int delay = 1000;
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-
             System.out.println(cas++);
             canvas.setX(canvas.getX()+10);
             canvas.repaint();
@@ -47,6 +47,8 @@ public class Controller implements KeyListener {
     public Controller() {
 
         createBoard();
+        cloneBoard();
+
         addSnake();
         addFood();
         new Timer(delay, taskPerformer).start();
@@ -62,6 +64,11 @@ public class Controller implements KeyListener {
             }
         }
     }
+    void cloneBoard(){
+        for(Block block: blocks){
+            board.add(block);
+        }
+    }
     void addFood(){
         int rand = generateRandNum(LENGTH*HEIGHT);
         var empty = blocks.get(rand);
@@ -73,9 +80,14 @@ public class Controller implements KeyListener {
         blocks.set(rand,food);
     }
     void addSnake(){
+        for()
+    }
+
+
+
+    void createSnake(){
         int rand = generateRandNum(LENGTH * HEIGHT);
         var snakeHead = new SnakeBlock(calculatePositionX(rand), calculatePositionY(rand));
-        blocks.set(rand,snakeHead);
         snake.add(snakeHead);
     }
     int calculatePositionX(int num){
