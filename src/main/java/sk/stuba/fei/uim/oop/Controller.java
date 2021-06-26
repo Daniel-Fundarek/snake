@@ -60,7 +60,7 @@ public class Controller implements KeyListener {
 
         for (int y = 0; y<HEIGHT;y++){
             for(int x = 0; x < LENGTH;x++){
-                blocks.add(new EmptyBlock(x,y));
+           //     blocks.add(new EmptyBlock(x,y));
             }
         }
     }
@@ -80,7 +80,7 @@ public class Controller implements KeyListener {
         blocks.set(rand,food);
     }
     void addSnake(){
-        for()
+      //  for()
     }
 
 
