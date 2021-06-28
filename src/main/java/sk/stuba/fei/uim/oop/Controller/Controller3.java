@@ -1,9 +1,6 @@
 package sk.stuba.fei.uim.oop.Controller;
 
-import sk.stuba.fei.uim.oop.Blocks.Block;
-import sk.stuba.fei.uim.oop.Blocks.EmptyBlock;
-import sk.stuba.fei.uim.oop.Blocks.SnakeBlock;
-import sk.stuba.fei.uim.oop.Blocks.SnakeBodyBlock;
+import sk.stuba.fei.uim.oop.Blocks.*;
 import sk.stuba.fei.uim.oop.Canvas;
 import sk.stuba.fei.uim.oop.MainFrame;
 
@@ -11,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
+import static java.lang.Math.abs;
 
 public class Controller3 {
     private int LENGTH = 20, HEIGHT = 20;
@@ -21,8 +21,10 @@ public class Controller3 {
     Direction prevDir = direction;
     Canvas canvas = new Canvas(board,LENGTH,HEIGHT);
     MainFrame frame = new MainFrame(canvas);
+    Random random = new Random();
+    FoodBlock food;
 
-    int delay = 1000;
+    int delay = 100;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -36,6 +38,7 @@ public class Controller3 {
            moveSnake();
            eraseSnakeEnd();
            addSnakeToBoard();
+           addFood();
            canvas.repaint();
            printBoard(board);
 
@@ -50,6 +53,9 @@ public class Controller3 {
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
         addSnakeHead();
+        generateFood();
+        addFood();
+
         new Timer(delay, taskPerformer).start();
     }
 
@@ -62,8 +68,40 @@ public class Controller3 {
         return curr;
     }
 
+    void addFood(){
+        board[food.getX()][food.getY()] = food;
+    }
+    void generateFood(){
 
+        ArrayList<Integer> excluded = new ArrayList<>();
+        for (Block block : snake){
+            excluded.add(block.getY()*LENGTH + block.getX());
+         }
+        int rand = generateRandom();
+        int x = rand % LENGTH;
+        int y = rand / LENGTH;
+        food = new FoodBlock(board[x][y].getX(),board[x][y].getY());
+    }
 
+    public int generateRandom() {
+        ArrayList<Block> array = new ArrayList<>();
+        for (int y = 0; y < LENGTH;y++){
+            for(int x =0; x < HEIGHT;x++){
+                array.add(new EmptyBlock(x,y));
+            }
+        }
+        for (Block block : snake){
+            for(int i = array.size()-1;i >= 0;i--){
+                if(array.get(i).getX()== block.getX() && array.get(i).getY() == block.getY()){
+                    array.remove(i);
+                    break;
+                }
+            }
+        }
+        int rand = random.nextInt(array.size());
+        return array.get(rand).getX()+ array.get(rand).getY()*LENGTH;
+
+    }
     void printBoard(Block[][] board){
 
         for(int y = 0; y< board.length; y++){
