@@ -24,19 +24,17 @@ public class Controller3 {
     Random random = new Random();
     FoodBlock food;
 
-    int delay = 100;
+    int delay = 300;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
 
        //     System.out.println(cas++);
            direction = frame.getDirection();
-           canvas.setX(canvas.getX()+direction.getX()*10);
-           canvas.setY(canvas.getY() + direction.getY()*10);
-           board = createDeepCopy(emptyBoard,board);
+
            movementDecider();
-           moveSnake();
-           eraseSnakeEnd();
+           checkCollision();
+           board = createDeepCopy(emptyBoard,board);
            addSnakeToBoard();
            addFood();
            canvas.repaint();
@@ -81,6 +79,25 @@ public class Controller3 {
         int x = rand % LENGTH;
         int y = rand / LENGTH;
         food = new FoodBlock(board[x][y].getX(),board[x][y].getY());
+    }
+    void checkCollision() {
+        int x = snake.get(0).getX() + direction.getX();
+        int y = snake.get(0).getY() + direction.getY();
+        if ( x == LENGTH || y == HEIGHT){
+            // out of bound end
+        }
+        else {
+            if (board[x][y] instanceof EmptyBlock) {
+                moveSnake();
+                eraseSnakeEnd();
+            } else if (board[x][y] instanceof SnakeBodyBlock) {
+                System.out.println("rip");
+                System.exit(55);
+            } else if (board[x][y] instanceof FoodBlock) {
+                moveSnake();
+                generateFood();
+            }
+        }
     }
 
     public int generateRandom() {

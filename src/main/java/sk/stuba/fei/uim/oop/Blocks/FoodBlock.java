@@ -14,6 +14,6 @@ public class FoodBlock extends Block {
         g.drawRect(x*length,y*height,length,height);
         g.setColor(Color.GREEN);
         g.fillOval(x*length,y*height,length,height);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.GRAY);
     }
 }
