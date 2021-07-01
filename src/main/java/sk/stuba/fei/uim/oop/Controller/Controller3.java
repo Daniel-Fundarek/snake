@@ -18,7 +18,7 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Controller3 {
-    private int LENGTH = 10, HEIGHT = 10;
+    private int LENGTH = 20, HEIGHT = 10;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -92,8 +92,10 @@ public class Controller3 {
     void checkCollision() {
         int x = snake.get(0).getX() + direction.getX();
         int y = snake.get(0).getY() + direction.getY();
-        if ( x == LENGTH || y == HEIGHT){
+        if ( x == LENGTH || y == HEIGHT || x == -1 || y == -1){
             // out of bound end
+            System.out.println("rip");
+            System.exit(55);
         }
         else {
             if (board[x][y] instanceof EmptyBlock) {
@@ -132,10 +134,10 @@ public class Controller3 {
 
         for(int y = 0; y< board.length; y++){
             for(int x = 0;x < board[y].length; x++){
-                if(board[x][y] instanceof SnakeBlock ){
+                if(board[y][x] instanceof SnakeBlock ){
                     System.out.print("S");
                 }
-                else if(board[x][y] instanceof SnakeBodyBlock){
+                else if(board[y][x] instanceof SnakeBodyBlock){
                     System.out.print("s");
                 }
                 else{

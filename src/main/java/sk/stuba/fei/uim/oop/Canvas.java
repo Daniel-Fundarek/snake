@@ -27,7 +27,7 @@ public class Canvas extends JPanel {
         super.paintComponent(g);
         for(int x = 0; x< board.length; x++){
             for(int y = 0;y < board[x].length ; y++){
-               board[x][y].paintBlock(g,height, height);
+               board[x][y].paintBlock(g,length, length);
             }
         }
 
