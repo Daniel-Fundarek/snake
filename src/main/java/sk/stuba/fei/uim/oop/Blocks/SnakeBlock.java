@@ -12,7 +12,7 @@ public class SnakeBlock extends Block {
     @Override
     public void paintBlock(Graphics g, int length, int height) {
          Graphics2D g2d = (Graphics2D) g;
-        //g.fillRect(x*length,y*height,length,height);
-        g2d.drawImage(image,x,y,null);
+        g.fillRect(x*length,y*height,length,height);
+        //g2d.drawImage(image,x,y,null);
     }
 }

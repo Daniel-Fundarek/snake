@@ -40,7 +40,6 @@ public class Controller3 {
 
        //     System.out.println(cas++);
            direction = frame.getDirection();
-
            movementDecider();
            checkCollision();
            board = createDeepCopy(emptyBoard,board);
