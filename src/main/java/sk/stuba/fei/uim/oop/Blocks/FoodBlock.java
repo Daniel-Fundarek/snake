@@ -5,8 +5,8 @@ import sk.stuba.fei.uim.oop.Blocks.Block;
 import java.awt.*;
 
 public class FoodBlock extends Block {
-    public FoodBlock(int x, int y) {
-        super(x, y);
+    public FoodBlock(int x, int y, Image image) {
+        super(x, y,image);
     }
 
     @Override

@@ -5,12 +5,10 @@ import sk.stuba.fei.uim.oop.Blocks.Block;
 import java.awt.*;
 
 public class EmptyBlock extends Block {
-    public EmptyBlock() {
-        super(1,1 );
-    }
 
-    public EmptyBlock(int x, int y) {
-        super(x, y);
+
+    public EmptyBlock(int x, int y, Image image) {
+        super(x, y, image);
     }
 
     @Override

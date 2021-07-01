@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.awt.*;
 
 abstract public class Block {
-    public Block(int x, int y) {
+    public Block(int x, int y, Image image) {
         this.x = x;
         this.y = y;
     }
@@ -14,5 +14,7 @@ abstract public class Block {
     @Setter
     @Getter
     int x,y;
+    @Getter@Setter
+    Image image;
     public abstract void paintBlock(Graphics g,int length, int height);
 }
