@@ -13,6 +13,6 @@ public class EmptyBlock extends Block {
 
     @Override
     public void paintBlock(Graphics g, int length, int height) {
-        g.drawRect(x*length,y*height,length,height);
+        g.drawRect(getX()*length,getY()*height,length,height);
     }
 }

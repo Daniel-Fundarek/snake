@@ -18,14 +18,14 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Controller3 {
-    private int LENGTH = 20, HEIGHT = 10;
+    private int LENGTH = 20, HEIGHT = 20;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
     Direction direction = Direction.RIGHT;
     Direction prevDir = direction;
-    Canvas canvas = new Canvas(board,LENGTH,HEIGHT);
-    MainFrame frame = new MainFrame(canvas);
+    Canvas canvas;
+    MainFrame frame;
     Random random = new Random();
     FoodBlock food;
     Image snakeImage;
@@ -45,6 +45,7 @@ public class Controller3 {
            board = createDeepCopy(emptyBoard,board);
            addSnakeToBoard();
            addFood();
+           setRotation();
            canvas.repaint();
            printBoard(board);
 
@@ -56,12 +57,15 @@ public class Controller3 {
 
 
     public Controller3() {
-        importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snake.png");
+        foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/food.png");
+        snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snake.png");
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
         addSnakeHead();
         generateFood();
         addFood();
+        canvas = new Canvas(board,LENGTH,HEIGHT);
+        frame = new MainFrame(canvas);
 
         new Timer(delay, taskPerformer).start();
     }
@@ -87,7 +91,8 @@ public class Controller3 {
         int rand = generateRandom();
         int x = rand % LENGTH;
         int y = rand / LENGTH;
-        food = new FoodBlock(board[x][y].getX(),board[x][y].getY(), foodImage);
+        System.out.println(foodImage.getClass());
+        food = new FoodBlock(board[y][x].getX(),board[y][x].getY(), foodImage);
     }
     void checkCollision() {
         int x = snake.get(0).getX() + direction.getX();
@@ -139,6 +144,9 @@ public class Controller3 {
                 }
                 else if(board[y][x] instanceof SnakeBodyBlock){
                     System.out.print("s");
+                }
+                else if (board[y][x] instanceof FoodBlock){
+                    System.out.print("0");
                 }
                 else{
                     System.out.print("#");
@@ -194,12 +202,23 @@ public class Controller3 {
     }
 
     private Image importImage(String imageURL){
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("snake.png "));
-        } catch (IOException e) {
+        Image image = null;
+        try
+        {
+             image = ImageIO.read(new File(imageURL));
         }
-        return img;
+        catch (IOException e)
+        {
+            String workingDir = System.getProperty("user.dir");
+            System.out.println("Current working directory : " + workingDir);
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    private void setRotation(){
+        SnakeBlock snakeHead = (SnakeBlock) snake.get(0);
+        snakeHead.rotateImage(direction.getEval());
     }
 
 }
