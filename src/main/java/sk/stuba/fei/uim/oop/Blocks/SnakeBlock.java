@@ -19,12 +19,12 @@ public class SnakeBlock extends Block {
         //rx is the x coordinate for rotation, ry is the y coordinate for rotation, and angle
         //is the angle to rotate the image. If you want to rotate around the center of an image,
         //use the image's center x and y coordinates for rx and ry.
-        AffineTransform a = AffineTransform.getRotateInstance(angle, getX()*length+length/2, getY()*height+height/2);
+        AffineTransform a = AffineTransform.getRotateInstance(angle, getX()*length+length/2+getOffset(), getY()*height+height/2+getOffset());
         //Set our Graphics2D object to the transform
         g2d.setTransform(a);
         //Draw our image like normal
-        g.drawImage(getImage(),getX()*length,getY()*height,length,height,null);
-        g.drawRect(getX()*length,getY()*height,length,height);
+        g.drawImage(getImage(),getX()*length+getOffset(),getY()*height+getOffset(),length,height,null);
+        g.drawRect(getX()*length+getOffset(),getY()*height+getOffset(),length,height);
         //Reset our graphics object so we can draw with it again.
         g2d.setTransform(backup);
 

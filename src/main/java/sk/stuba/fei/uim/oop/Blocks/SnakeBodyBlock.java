@@ -9,6 +9,6 @@ public class SnakeBodyBlock extends Block{
 
     @Override
     public void paintBlock(Graphics g,int length, int height) {
-        g.fillRect(getX()*length,getY()*height,length,height);
+        g.fillRect(getX()*length+getOffset(),getY()*height+getOffset(),length,height);
     }
 }

@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.Controller;
 
+import sk.stuba.fei.uim.oop.Background.Background;
 import sk.stuba.fei.uim.oop.Blocks.*;
 import sk.stuba.fei.uim.oop.Canvas;
 import sk.stuba.fei.uim.oop.MainFrame;
@@ -17,8 +18,8 @@ import java.util.Random;
 
 import static java.lang.Math.abs;
 
-public class Controller3 {
-    private int LENGTH = 20, HEIGHT = 20;
+public class Controller {
+    private int LENGTH = 40, HEIGHT = 20;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -32,6 +33,8 @@ public class Controller3 {
     Image snakeHeadImage;
     Image foodImage;
     Image emptyBlockImage;
+    Image backgroundImage;
+    Background background;
 
     int delay = 300;
     ActionListener taskPerformer = new ActionListener() {
@@ -56,15 +59,19 @@ public class Controller3 {
 
 
 
-    public Controller3() {
+    public Controller() {
         foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/food.png");
         snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snake.png");
+        emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
+        backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Background/background.jpg");
+
+        background = new Background(backgroundImage);
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
         addSnakeHead();
         generateFood();
         addFood();
-        canvas = new Canvas(board,LENGTH,HEIGHT);
+        canvas = new Canvas(board,LENGTH,HEIGHT,background);
         frame = new MainFrame(canvas);
 
         new Timer(delay, taskPerformer).start();
@@ -112,6 +119,7 @@ public class Controller3 {
             } else if (board[x][y] instanceof FoodBlock) {
                 moveSnake();
                 generateFood();
+                background.addToScore();
             }
         }
     }

@@ -15,8 +15,8 @@ public class FoodBlock extends Block {
     public void paintBlock(Graphics g, int length, int height) {
      // g.drawRect(x*length,y*height,length,height);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(getImage(),getX()*length,getY()*height,length,height,null);
-        g2d.drawRect(getX()*length,getY()*height,length,height);
+        g2d.drawImage(getImage(),getX()*length+getOffset(),getY()*height+getOffset(),length,height,null);
+        g2d.drawRect(getX()*length+getOffset(),getY()*height+getOffset(),length,height);
 
     }
 

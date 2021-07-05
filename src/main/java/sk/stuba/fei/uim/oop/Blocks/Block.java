@@ -6,6 +6,8 @@ import lombok.Setter;
 import java.awt.*;
 
 abstract public class Block {
+    @Getter
+    private int offset = 50;
     @Setter
     @Getter
     private int x,y;
