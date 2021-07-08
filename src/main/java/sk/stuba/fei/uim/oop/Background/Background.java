@@ -25,9 +25,6 @@ public class Background {
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
         g2d.drawString(name+stringScore,10,20);
-
         g2d.setColor(Color.BLACK);
-
-
     }
 }

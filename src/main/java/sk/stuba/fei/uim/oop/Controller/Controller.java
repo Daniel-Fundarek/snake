@@ -36,7 +36,7 @@ public class Controller {
     Image backgroundImage;
     Background background;
 
-    int delay = 300;
+    int delay = 200;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -63,7 +63,7 @@ public class Controller {
         foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/food.png");
         snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snake.png");
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
-        backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Background/background.jpg");
+        backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
 
         background = new Background(backgroundImage);
         createEmptyBoard();

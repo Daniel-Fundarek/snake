@@ -20,5 +20,6 @@ abstract public class Block {
         this.image = image;
     }
 
+
     public abstract void paintBlock(Graphics g,int length, int height);
 }
