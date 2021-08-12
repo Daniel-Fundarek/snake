@@ -3,6 +3,7 @@ package sk.stuba.fei.uim.oop.Controller;
 import sk.stuba.fei.uim.oop.Background.Background;
 import sk.stuba.fei.uim.oop.Blocks.*;
 import sk.stuba.fei.uim.oop.Canvas;
+import sk.stuba.fei.uim.oop.DialogWindow.DialogExample;
 import sk.stuba.fei.uim.oop.MainFrame;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,7 @@ import static java.lang.Math.abs;
 
 public class Controller {
     private final int LENGTH = 40;
-    private final int HEIGHT = 40;
+    private final int HEIGHT = 20;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -37,6 +38,7 @@ public class Controller {
     Image backgroundImage;
     Background background;
     Timer timer;
+    DialogExample dialog = new DialogExample();
 
     int delay = 200;
     ActionListener taskPerformer = new ActionListener() {
@@ -116,6 +118,7 @@ public class Controller {
         if ( x == LENGTH || y == HEIGHT || x == -1 || y == -1){
             // out of bound end
             timer.stop();
+            dialog.setVisible(true);
           //  System.out.println("rip");
           //  System.exit(55);
         }
@@ -126,6 +129,7 @@ public class Controller {
             } else if (board[x][y] instanceof SnakeBodyBlock) {
 
                 timer.stop();
+                dialog.setVisible(true);
               //  System.out.println("rip");
               //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {
@@ -134,6 +138,9 @@ public class Controller {
                 background.addToScore();
             }
         }
+    }
+    void endDecider(){
+
     }
 
     public int generateRandom() {

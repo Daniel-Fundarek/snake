@@ -39,7 +39,7 @@ public class DialogExample implements ActionListener {
         d.add(b);
         d.add(c);
         d.setSize(300, 90);
-        d.setVisible(true);
+        //d.setVisible(true);
         d.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
     }
@@ -56,6 +56,7 @@ public class DialogExample implements ActionListener {
         }
         else{
             // exit and close
+            System.exit(0);
             d.dispose();
         }
     }
