@@ -19,7 +19,8 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Controller {
-    private int LENGTH = 40, HEIGHT = 20;
+    private final int LENGTH = 40;
+    private final int HEIGHT = 40;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Controller {
     Image emptyBlockImage;
     Image backgroundImage;
     Background background;
+    Timer timer;
 
     int delay = 200;
     ActionListener taskPerformer = new ActionListener() {
@@ -65,6 +67,10 @@ public class Controller {
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
 
+        restartFunct();
+    }
+
+    private void restartFunct(){
         background = new Background(backgroundImage);
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
@@ -74,8 +80,11 @@ public class Controller {
         canvas = new Canvas(board,LENGTH,HEIGHT,background);
         frame = new MainFrame(canvas);
 
-        new Timer(delay, taskPerformer).start();
+        timer = new Timer(delay, taskPerformer);
+        timer.start();
+
     }
+
 
     Block[][] createDeepCopy(Block[][] old, Block[][] curr){
 
@@ -106,16 +115,19 @@ public class Controller {
         int y = snake.get(0).getY() + direction.getY();
         if ( x == LENGTH || y == HEIGHT || x == -1 || y == -1){
             // out of bound end
-            System.out.println("rip");
-            System.exit(55);
+            timer.stop();
+          //  System.out.println("rip");
+          //  System.exit(55);
         }
         else {
             if (board[x][y] instanceof EmptyBlock) {
                 moveSnake();
                 eraseSnakeEnd();
             } else if (board[x][y] instanceof SnakeBodyBlock) {
-                System.out.println("rip");
-                System.exit(55);
+
+                timer.stop();
+              //  System.out.println("rip");
+              //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {
                 moveSnake();
                 generateFood();
@@ -198,6 +210,7 @@ public class Controller {
     void eraseSnakeEnd(){
         snake.remove(snake.size()-1);
     }
+
     void movementDecider(){
         int diffX = direction.getX() + prevDir.getX();
         int diffY  = direction.getY() + prevDir.getY();
