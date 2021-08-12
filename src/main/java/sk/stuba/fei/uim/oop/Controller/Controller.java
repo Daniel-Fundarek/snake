@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.oop.Controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import sk.stuba.fei.uim.oop.Background.Background;
 import sk.stuba.fei.uim.oop.Blocks.*;
 import sk.stuba.fei.uim.oop.Canvas;
@@ -38,6 +40,8 @@ public class Controller {
     Image backgroundImage;
     Background background;
     Timer timer;
+    @Setter@Getter
+    Boolean dialogResetVar = false;
     DialogExample dialog = new DialogExample();
 
     int delay = 200;
@@ -130,6 +134,14 @@ public class Controller {
 
                 timer.stop();
                 dialog.setVisible(true);
+                while (dialogResetVar.equals(true)){        // picovina
+                    System.out.println("a");
+                    dialogResetVar = dialog.getResetVar();
+                }
+                dialogResetVar = false;
+                dialog.setResetVar(false);
+
+                restartFunct();
               //  System.out.println("rip");
               //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {

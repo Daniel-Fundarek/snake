@@ -1,5 +1,8 @@
 package sk.stuba.fei.uim.oop.DialogWindow;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +12,8 @@ public class DialogExample implements ActionListener {
 
     private  JDialog d;
     private String title = "";
+    @Getter@Setter
+    private Boolean resetVar = false;
     JButton b = new JButton("Restart");
     JButton c = new JButton("Exit");
 
@@ -51,7 +56,7 @@ public class DialogExample implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(b.getText())){
             // restart
-
+            resetVar = true;
             setVisible(false);
         }
         else{
