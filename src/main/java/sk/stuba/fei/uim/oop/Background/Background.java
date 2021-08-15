@@ -1,8 +1,12 @@
 package sk.stuba.fei.uim.oop.Background;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.*;
 
 public class Background {
+    @Setter@Getter
     int score = 0;
     Image image;
 
@@ -14,7 +18,7 @@ public class Background {
         g.drawImage(image,0,0,1900,1020,null);
         drawString(g);
     }
-    public void addToScore(){
+    public void addToScore(){   //uz to nieje treba
     score++;
     }
     public  void drawString(Graphics g){

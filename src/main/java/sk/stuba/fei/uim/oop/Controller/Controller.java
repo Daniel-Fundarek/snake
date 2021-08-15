@@ -42,7 +42,7 @@ public class Controller {
     Timer timer;
     @Setter@Getter
     Boolean dialogResetVar = false;
-    DialogExample dialog = new DialogExample();
+    DialogExample dialog = new DialogExample("nazov", this);
 
     int delay = 200;
     ActionListener taskPerformer = new ActionListener() {
@@ -73,10 +73,10 @@ public class Controller {
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
 
-        restartFunct();
+        startFunct();
     }
 
-    private void restartFunct(){
+    public void startFunct(){
         background = new Background(backgroundImage);
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
@@ -86,6 +86,22 @@ public class Controller {
         canvas = new Canvas(board,LENGTH,HEIGHT,background);
         frame = new MainFrame(canvas);
 
+        timer = new Timer(delay, taskPerformer);
+        timer.start();
+
+    }
+    public void restartFunct(){
+
+        createEmptyBoard();
+        background.setScore(0);
+        board = createDeepCopy(emptyBoard,board);
+        snake.clear();
+        addSnakeHead();
+        generateFood();
+        addFood();
+        direction = Direction.RIGHT;
+        prevDir = Direction.RIGHT;
+        frame.setDirection(Direction.RIGHT);
         timer = new Timer(delay, taskPerformer);
         timer.start();
 
@@ -121,8 +137,7 @@ public class Controller {
         int y = snake.get(0).getY() + direction.getY();
         if ( x == LENGTH || y == HEIGHT || x == -1 || y == -1){
             // out of bound end
-            timer.stop();
-            dialog.setVisible(true);
+          restartProcedure();
           //  System.out.println("rip");
           //  System.exit(55);
         }
@@ -131,27 +146,20 @@ public class Controller {
                 moveSnake();
                 eraseSnakeEnd();
             } else if (board[x][y] instanceof SnakeBodyBlock) {
+                restartProcedure();
 
-                timer.stop();
-                dialog.setVisible(true);
-                while (dialogResetVar.equals(true)){        // picovina
-                    System.out.println("a");
-                    dialogResetVar = dialog.getResetVar();
-                }
-                dialogResetVar = false;
-                dialog.setResetVar(false);
-
-                restartFunct();
               //  System.out.println("rip");
               //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {
                 moveSnake();
                 generateFood();
-                background.addToScore();
+                background.setScore(background.getScore()+1);
             }
         }
     }
-    void endDecider(){
+    private void restartProcedure(){
+        timer.stop();
+        dialog.setVisible(true);
 
     }
 

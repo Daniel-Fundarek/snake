@@ -2,6 +2,7 @@ package sk.stuba.fei.uim.oop.DialogWindow;
 
 import lombok.Getter;
 import lombok.Setter;
+import sk.stuba.fei.uim.oop.Controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,15 +17,16 @@ public class DialogExample implements ActionListener {
     private Boolean resetVar = false;
     JButton b = new JButton("Restart");
     JButton c = new JButton("Exit");
+    Controller controller;
 
     public DialogExample() {
 
-        this("title");
+       // this("title");
 
     }
 
-    public DialogExample(String title) {
-
+    public DialogExample(String title, Controller controller) {
+        this.controller = controller;
         this.title = title;
         JFrame f = new JFrame();
 
@@ -44,6 +46,8 @@ public class DialogExample implements ActionListener {
         d.add(b);
         d.add(c);
         d.setSize(300, 90);
+        d.setLocationRelativeTo(null); // moc sa to netriafa
+        d.setAlwaysOnTop(true);
         //d.setVisible(true);
         d.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,8 +60,8 @@ public class DialogExample implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(b.getText())){
             // restart
-            resetVar = true;
             setVisible(false);
+            controller.restartFunct();
         }
         else{
             // exit and close
