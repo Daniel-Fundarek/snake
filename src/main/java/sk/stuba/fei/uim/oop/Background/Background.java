@@ -18,9 +18,7 @@ public class Background {
         g.drawImage(image,0,0,1900,1020,null);
         drawString(g);
     }
-    public void addToScore(){   //uz to nieje treba
-    score++;
-    }
+
     public  void drawString(Graphics g){
 // does not work
         Graphics2D g2d = (Graphics2D) g;

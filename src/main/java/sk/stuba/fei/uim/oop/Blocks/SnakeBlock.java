@@ -29,6 +29,9 @@ public class SnakeBlock extends Block {
         g2d.setTransform(backup);
 
     }
+
+
+
     public void rotateImage(int direction){
         angle = Math.PI/2 * direction;
     }
