@@ -14,6 +14,8 @@ abstract public class Block {
     private int x,y;
     @Getter@Setter
     private Image image;
+    @Getter@Setter
+    Double angle = 0.0;
 
     public Block(int x, int y, Image image) {
         this.x = x;
@@ -41,5 +43,8 @@ abstract public class Block {
         Graphics2D g2d = (Graphics2D) g;
         //Reset our graphics object so we can draw with it again.
         g2d.setTransform(backup);
+    }
+    public void calculateAngle(int direction){
+        setAngle(Math.PI/2 * direction);
     }
 }

@@ -9,21 +9,19 @@ import sk.stuba.fei.uim.oop.DialogWindow.DialogExample;
 import sk.stuba.fei.uim.oop.MainFrame;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
+import java.util.*;
 
 
 public class Controller {
-    private final int LENGTH = 40;
-    private final int HEIGHT = 20;
+    private final int LENGTH = 20;
+    private final int HEIGHT = 10;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -33,18 +31,21 @@ public class Controller {
     MainFrame frame;
     Random random = new Random();
     FoodBlock food;
-    Image snakeImage;
+    Image curvedSnakeBodyImage;
+    Image straightSnakeBodyImage;
     Image snakeHeadImage;
     Image foodImage;
     Image emptyBlockImage;
     Image backgroundImage;
     Background background;
     Timer timer;
+    int snakeTurn = 0;
     @Setter@Getter
     Boolean dialogResetVar = false;
     DialogExample dialog = new DialogExample("nazov", this);
 
-    int delay = 200;
+
+    int delay = 300;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -58,7 +59,7 @@ public class Controller {
            addFood();
            setRotation();
            canvas.repaint();
-           printBoard(board);
+          // printBoard(board);
 
         }
     };
@@ -68,11 +69,14 @@ public class Controller {
 
 
     public Controller() {
+
+
         foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/food.png");
-        snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snake.png");
+        snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snakeHeadTransparent.png");
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
-
+        curvedSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyCurvedTransparent.png");
+        straightSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyStraightTransparent.png");
         startFunct();
     }
 
@@ -231,22 +235,63 @@ public class Controller {
     void moveSnake(){
         int x = snake.get(0).getX();
         int y = snake.get(0).getY();
+        Double angle = snake.get(0).getAngle();
         snake.add(0,new SnakeBlock(x+direction.getX(),y+direction.getY(), snakeHeadImage));
-        snake.set(1,new SnakeBodyBlock(x,y,snakeImage));
+        if (snakeTurn == 0) {
+            snake.set(1, new SnakeBodyBlock(x, y, straightSnakeBodyImage));
+        }
+        else {
+            snake.set(1, new SnakeBodyBlock(x, y, curvedSnakeBodyImage));
+        }
+        if(snakeTurn == -1){
+            angle = Math.PI/2 + angle;
+        }
+        snake.get(1).setAngle(angle);
+
     }
     void eraseSnakeEnd(){
         snake.remove(snake.size()-1);
     }
 
     void movementDecider(){
+        // riesi aby sa nedalo ist oproti o 180 stupnov
         int diffX = direction.getX() + prevDir.getX();
         int diffY  = direction.getY() + prevDir.getY();
         if(diffX == 0 && diffY == 0){
             direction = prevDir;
+            TurnDecider();
         }
         else{
+            TurnDecider();
             prevDir = direction;
         }
+    }
+    void TurnDecider(){
+        if (direction.getEval() == prevDir.getEval()){
+            snakeTurn = 0;
+        }
+        else{
+            System.out.println(" smer " +direction.getEval()+
+                    " predchadzajuci smer " + prevDir.getEval());
+            if(direction.getEval() < prevDir.getEval() ){
+                if (direction.getEval() == 0 && prevDir.getEval() == 3){
+                    snakeTurn = 1;
+                }
+                else {
+                    snakeTurn = -1; // dolava
+                }
+
+            }
+            else if(prevDir.getEval() == 0 && direction.getEval() == 3){ // funguje
+                snakeTurn = -1; // dolava
+            }
+
+            else{
+                snakeTurn =1; // doprava
+            }
+
+        }
+        System.out.println(snakeTurn);
     }
 
     private Image importImage(String imageURL){
@@ -266,7 +311,7 @@ public class Controller {
 
     private void setRotation(){
         SnakeBlock snakeHead = (SnakeBlock) snake.get(0);
-        snakeHead.rotateImage(direction.getEval());
+        snakeHead.calculateAngle(direction.getEval());
     }
 
 }
