@@ -12,7 +12,7 @@ public class EmptyBlock extends Block {
 
     @Override
     public void paintBlock(Graphics g, int length, int height) {
-        g.drawImage(getImage(),getX()*length+getOffset(),getY()*height+getOffset(),length,height,null);
+        //g.drawImage(getImage(),getX()*length+getOffset(),getY()*height+getOffset(),length,height,null);
         g.drawRect(getX()*length+getOffset(),getY()*height+getOffset(),length,height);
     }
 }

@@ -20,8 +20,8 @@ import java.util.*;
 
 
 public class Controller {
-    private final int LENGTH = 20;
-    private final int HEIGHT = 10;
+    private final int LENGTH = 10;
+    private final int HEIGHT = 5;
     Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
     Block[][] board = new Block[LENGTH][HEIGHT];
     ArrayList<Block> snake = new ArrayList<>();
@@ -37,6 +37,7 @@ public class Controller {
     Image foodImage;
     Image emptyBlockImage;
     Image backgroundImage;
+    Image grassImage;
     Background background;
     Timer timer;
     int snakeTurn = 0;
@@ -71,17 +72,18 @@ public class Controller {
     public Controller() {
 
 
-        foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/food.png");
+        foodImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Food/apple.png");
         snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snakeHeadTransparent.png");
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
         curvedSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyCurvedTransparent.png");
         straightSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyStraightTransparent.png");
+        grassImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Grass/grassImage.jpg");
         startFunct();
     }
 
     public void startFunct(){
-        background = new Background(backgroundImage);
+        background = new Background(backgroundImage,grassImage);
         createEmptyBoard();
         board = createDeepCopy(emptyBoard,board);
         addSnakeHead();
@@ -126,7 +128,7 @@ public class Controller {
     }
     void generateFood(){
 
-        ArrayList<Integer> excluded = new ArrayList<>();
+       /* ArrayList<Integer> excluded = new ArrayList<>();
         for (Block block : snake){
             excluded.add(block.getY()*LENGTH + block.getX());
          }
@@ -134,7 +136,8 @@ public class Controller {
         int x = rand % LENGTH;
         int y = rand / LENGTH;
         System.out.println(foodImage.getClass());
-        food = new FoodBlock(board[y][x].getX(),board[y][x].getY(), foodImage);
+        //food = new FoodBlock(board[y][x].getX(),board[y][x].getY(), foodImage);*/
+        food = generateRandom1();
     }
     void checkCollision() {
         int x = snake.get(0).getX() + direction.getX();
@@ -184,6 +187,26 @@ public class Controller {
         }
         int rand = random.nextInt(array.size());
         return array.get(rand).getX()+ array.get(rand).getY()*LENGTH;
+
+    }
+
+    public FoodBlock generateRandom1() {
+        ArrayList<FoodBlock> array = new ArrayList<>();
+        for (int y = 0; y < HEIGHT;y++){
+            for(int x =0; x < LENGTH;x++){
+                array.add(new FoodBlock(x,y, foodImage));
+            }
+        }
+        for (Block block : snake){
+            for(int i = array.size()-1;i >= 0;i--){
+                if(array.get(i).getX()== block.getX() && array.get(i).getY() == block.getY()){
+                    array.remove(i);
+                    break;
+                }
+            }
+        }
+        int rand = random.nextInt(array.size());
+        return array.get(rand);
 
     }
     void printBoard(Block[][] board){

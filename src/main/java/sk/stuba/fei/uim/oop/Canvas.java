@@ -15,12 +15,14 @@ public class Canvas extends JPanel {
     Block[][] board;
     int length, height;
     Background bg;
-    public Canvas(Block[][] board, int length, int height, Background bg) {
+    public Canvas(Block[][] board, int length, int height, Background bg) { // odstranit zbytocny length a height
         this.board = board;
         this.length = RESOLUTIONX/length;
         this.height = RESOLUTIONY/height ;
         this.bg = bg;
-        System.out.println(this.length);
+        bg.setWidth(board.length*this.height);
+        bg.setHeight(board[0].length*this.height);
+
         setFocusable(false);
         setSize(RESOLUTIONX,RESOLUTIONY);
     }
