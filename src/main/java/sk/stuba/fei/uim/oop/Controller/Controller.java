@@ -38,6 +38,9 @@ public class Controller {
     Image emptyBlockImage;
     Image backgroundImage;
     Image grassImage;
+    Image straightTail;
+    Image curvedTail;
+    Image headTail;
     Background background;
     Timer timer;
     int snakeTurn = 0;
@@ -76,9 +79,12 @@ public class Controller {
         snakeHeadImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/SnakeHead/snakeHeadTransparent.png");
         emptyBlockImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Empty/background.png");
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
-        curvedSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyCurvedTransparent.png");
+        curvedSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyCurvedTransparent1.png");
         straightSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyStraightTransparent.png");
         grassImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Grass/grassImage.jpg");
+        straightTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/StraightTail.png");
+        curvedTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/CurvedTail.png");
+        headTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/HeadTail.png");
         startFunct();
     }
 
@@ -152,6 +158,7 @@ public class Controller {
             if (board[x][y] instanceof EmptyBlock) {
                 moveSnake();
                 eraseSnakeEnd();
+                addTail();
             } else if (board[x][y] instanceof SnakeBodyBlock) {
                 restartProcedure();
 
@@ -159,6 +166,7 @@ public class Controller {
               //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {
                 moveSnake();
+                addTail();
                 generateFood();
                 background.setScore(background.getScore()+1);
             }
@@ -170,7 +178,7 @@ public class Controller {
 
     }
 
-    public int generateRandom() {
+    public int generateRandom() { // blbost asi
         ArrayList<Block> array = new ArrayList<>();
         for (int y = 0; y < LENGTH;y++){
             for(int x =0; x < HEIGHT;x++){
@@ -271,6 +279,21 @@ public class Controller {
         }
         snake.get(1).setAngle(angle);
 
+
+    }
+    void addTail(){ // add one before last
+        Block block;
+        block = snake.get(snake.size()-1);
+        if (snake.size()>1) {
+            if (block.getImage().equals(curvedSnakeBodyImage)) {
+                block.setImage(curvedTail); // curved tail
+            } else {
+                block.setImage(straightTail); // straight tail
+            }
+        }
+        else{
+            block.setImage(headTail); // head with tail
+        }
     }
     void eraseSnakeEnd(){
         snake.remove(snake.size()-1);
