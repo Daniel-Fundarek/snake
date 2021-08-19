@@ -22,7 +22,6 @@ public class Canvas extends JPanel {
         this.bg = bg;
         bg.setWidth(board.length*this.height);
         bg.setHeight(board[0].length*this.height);
-
         setFocusable(false);
         setSize(RESOLUTIONX,RESOLUTIONY);
     }
@@ -31,9 +30,9 @@ public class Canvas extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         bg.paintBackground(g);
-        for(int x = 0; x< board.length; x++){
-            for(int y = 0;y < board[x].length ; y++){
-               board[x][y].paintBlock(g,height, height);// originally length
+        for (Block[] blocks : board) {
+            for (Block block : blocks) {
+                block.paintBlock(g, height, height);// originally length
             }
         }
 

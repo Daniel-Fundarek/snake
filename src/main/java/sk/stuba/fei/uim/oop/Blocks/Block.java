@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 abstract public class Block {
+    @Getter@Setter
+    int turn =0;
     @Getter
     private int offset = 50;
     @Setter
@@ -35,7 +37,6 @@ abstract public class Block {
         AffineTransform a = AffineTransform.getRotateInstance(angle, getX()*length+length/2+getOffset(), getY()*height+height/2+getOffset());
         //Set our Graphics2D object to the transform
         g2d.setTransform(a);
-        //Draw our image like normal
 
         return backup;
     }

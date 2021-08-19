@@ -1,9 +1,15 @@
 package sk.stuba.fei.uim.oop.Blocks;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class SnakeBodyBlock extends Block{
+    @Setter
+    @Getter
+    int turn = 0;
     public SnakeBodyBlock(int x, int y, Image image) {
         super(x, y, image);
     }

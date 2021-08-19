@@ -49,7 +49,7 @@ public class Controller {
     DialogExample dialog = new DialogExample("nazov", this);
 
 
-    int delay = 1000;
+    int delay = 300;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -63,7 +63,7 @@ public class Controller {
            addFood();
            setRotation();
            canvas.repaint();
-          // printBoard(board);
+           printBoard(board);
 
         }
     };
@@ -161,7 +161,8 @@ public class Controller {
                 addTail();
             } else if (board[x][y] instanceof SnakeBodyBlock) {
                 restartProcedure();
-
+            } else if (board[x][y] instanceof SnakeTailBlock) {
+                restartProcedure();
               //  System.out.println("rip");
               //  System.exit(55);
             } else if (board[x][y] instanceof FoodBlock) {
@@ -219,18 +220,17 @@ public class Controller {
     }
     void printBoard(Block[][] board){
 
-        for(int y = 0; y< board.length; y++){
-            for(int x = 0;x < board[y].length; x++){
-                if(board[y][x] instanceof SnakeHeadBlock){
+        for (Block[] blocks : board) {
+            for (Block block : blocks) {
+                if (block instanceof SnakeHeadBlock) {
                     System.out.print("S");
-                }
-                else if(board[y][x] instanceof SnakeBodyBlock){
+                } else if (block instanceof SnakeBodyBlock) {
                     System.out.print("s");
-                }
-                else if (board[y][x] instanceof FoodBlock){
+                } else if (block instanceof SnakeTailBlock) {
+                    System.out.print("-");
+                } else if (block instanceof FoodBlock) {
                     System.out.print("0");
-                }
-                else{
+                } else {
                     System.out.print("#");
                 }
             }
@@ -268,12 +268,15 @@ public class Controller {
         int y = snake.get(0).getY();
         Double angle = snake.get(0).getAngle();
         snake.add(0,new SnakeHeadBlock(x+direction.getX(),y+direction.getY(), snakeHeadImage));
+
         if (snakeTurn == 0) {
             snake.set(1, new SnakeBodyBlock(x, y, straightSnakeBodyImage));
+
         }
         else {
             snake.set(1, new SnakeBodyBlock(x, y, curvedSnakeBodyImage));
         }
+        snake.get(1).setTurn(snakeTurn);
         if(snakeTurn == -1){
             angle = Math.PI/2 + angle;
         }
@@ -285,11 +288,17 @@ public class Controller {
         Block block;
         block = snake.get(snake.size()-1);
         if (snake.size()>1) {
+            var tail = new SnakeTailBlock(block.getX(), block.getY(), null);
+            tail.setAngle(block.getAngle());
             if (block.getImage().equals(curvedSnakeBodyImage)) {
-                block.setImage(curvedTail); // curved tail
+                tail.setImage(curvedTail);
+               // block.setImage(curvedTail); // curved tail
             } else {
-                block.setImage(straightTail); // straight tail
+               // block.setImage(straightTail); // straight tail
+                tail.setImage(straightTail);
             }
+            tail.setTurn(snake.get(snake.size()-1).getTurn());
+            snake.set(snake.size()-1,tail);
         }
         else{
             block.setImage(headTail); // head with tail
