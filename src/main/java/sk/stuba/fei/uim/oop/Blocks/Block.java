@@ -39,7 +39,7 @@ abstract public class Block {
 
         return backup;
     }
-    public AffineTransform flipGraphics(Graphics g){ /// treba odtestovat
+    public AffineTransform flipVerticallyGraphics(Graphics g){ /// treba odtestovat
         Graphics2D g2d = (Graphics2D) g;
         //Make a backup so that we can reset our graphics object after using it.
         AffineTransform backup = g2d.getTransform();

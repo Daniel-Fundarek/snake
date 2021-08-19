@@ -49,7 +49,7 @@ public class Controller {
     DialogExample dialog = new DialogExample("nazov", this);
 
 
-    int delay = 300;
+    int delay = 1000;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -221,7 +221,7 @@ public class Controller {
 
         for(int y = 0; y< board.length; y++){
             for(int x = 0;x < board[y].length; x++){
-                if(board[y][x] instanceof SnakeBlock ){
+                if(board[y][x] instanceof SnakeHeadBlock){
                     System.out.print("S");
                 }
                 else if(board[y][x] instanceof SnakeBodyBlock){
@@ -254,7 +254,7 @@ public class Controller {
     void addSnakeHead(){
         int x = 1; // remake for randomness
         int y = 1;
-        snake.add(new SnakeBlock(x,y,snakeHeadImage));
+        snake.add(new SnakeHeadBlock(x,y,snakeHeadImage));
     }
 
     void addSnakeToBoard(){
@@ -267,7 +267,7 @@ public class Controller {
         int x = snake.get(0).getX();
         int y = snake.get(0).getY();
         Double angle = snake.get(0).getAngle();
-        snake.add(0,new SnakeBlock(x+direction.getX(),y+direction.getY(), snakeHeadImage));
+        snake.add(0,new SnakeHeadBlock(x+direction.getX(),y+direction.getY(), snakeHeadImage));
         if (snakeTurn == 0) {
             snake.set(1, new SnakeBodyBlock(x, y, straightSnakeBodyImage));
         }
@@ -356,7 +356,7 @@ public class Controller {
     }
 
     private void setRotation(){
-        SnakeBlock snakeHead = (SnakeBlock) snake.get(0);
+        SnakeHeadBlock snakeHead = (SnakeHeadBlock) snake.get(0);
         snakeHead.calculateAngle(direction.getEval());
     }
 
