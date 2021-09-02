@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
-    int RESOLUTIONX = 1800;
+    int RESOLUTIONX = 1800;//1800
     int RESOLUTIONY = 900;
     Block[][] board;
     int length, height;

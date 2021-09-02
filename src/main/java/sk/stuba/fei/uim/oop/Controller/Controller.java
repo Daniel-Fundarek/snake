@@ -5,7 +5,7 @@ import lombok.Setter;
 import sk.stuba.fei.uim.oop.Background.Background;
 import sk.stuba.fei.uim.oop.Blocks.*;
 import sk.stuba.fei.uim.oop.Canvas;
-import sk.stuba.fei.uim.oop.DialogWindow.DialogExample;
+import sk.stuba.fei.uim.oop.DialogWindow.DialogWindow;
 import sk.stuba.fei.uim.oop.MainFrame;
 
 import javax.imageio.ImageIO;
@@ -46,10 +46,10 @@ public class Controller {
     int snakeTurn = 0;
     @Setter@Getter
     Boolean dialogResetVar = false;
-    DialogExample dialog = new DialogExample("nazov", this);
+    DialogWindow dialog = new DialogWindow("End dialog window", this);
 
 
-    int delay = 300;
+    int delay = 500;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -81,7 +81,7 @@ public class Controller {
         backgroundImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Background/background.jpg");
         curvedSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyCurvedTransparent1.png");
         straightSnakeBodyImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/snakeBody/snakeBodyStraightTransparent.png");
-        grassImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Grass/grassImage.jpg");
+        grassImage = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Grass/grassImage.png");
         straightTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/StraightTail.png");
         curvedTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/CurvedTail.png");
         headTail = importImage("src/main/java/sk/stuba/fei/uim/oop/Images/Tail/HeadTail.png");
@@ -214,10 +214,33 @@ public class Controller {
                 }
             }
         }
+
         int rand = random.nextInt(array.size());
         return array.get(rand);
 
     }
+
+    public FoodBlock generateRandom2() {
+        ArrayList<FoodBlock> array = new ArrayList<>();
+        for (int y = 0; y < HEIGHT;y++){
+            for(int x =0; x < LENGTH;x++){
+                array.add(new FoodBlock(x,y, foodImage));
+            }
+        }
+        for (Block block : snake){
+            for(int i = array.size()-1;i >= 0;i--){
+                if(array.get(i).getX()== block.getX() && array.get(i).getY() == block.getY()){
+                    array.remove(i);
+                    break;
+                }
+            }
+        }
+
+        int rand = random.nextInt(array.size());
+        return array.get(rand);
+
+    }
+
     void printBoard(Block[][] board){
 
         for (Block[] blocks : board) {
@@ -284,20 +307,31 @@ public class Controller {
 
 
     }
-    void addTail(){ // add one before last
+    void addTail(){ // add  last
         Block block;
         block = snake.get(snake.size()-1);
         if (snake.size()>1) {
             var tail = new SnakeTailBlock(block.getX(), block.getY(), null);
-            tail.setAngle(block.getAngle());
-            if (block.getImage().equals(curvedSnakeBodyImage)) {
+
+
+            if (block.getImage().equals(curvedSnakeBodyImage) || block.getImage().equals(curvedTail)) {
+                tail.setAngle(block.getAngle());
+                if (block instanceof SnakeTailBlock && block.getTurn() == -1){
+
+                    tail.setAngle(block.getAngle() + Math.PI/2); // malo by byt - pi/2 ale takto to funguje
+                }
+
                 tail.setImage(curvedTail);
+                System.out.println("zahnuty");
                // block.setImage(curvedTail); // curved tail
             } else {
+                tail.setAngle(block.getAngle());
                // block.setImage(straightTail); // straight tail
                 tail.setImage(straightTail);
+                System.out.println("nezahnuty");
             }
             tail.setTurn(snake.get(snake.size()-1).getTurn());
+
             snake.set(snake.size()-1,tail);
         }
         else{

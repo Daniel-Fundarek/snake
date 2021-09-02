@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DialogExample implements ActionListener {
+public class DialogWindow implements ActionListener {
 
     private  JDialog d;
     private String title = "";
@@ -19,13 +19,13 @@ public class DialogExample implements ActionListener {
     JButton c = new JButton("Exit");
     Controller controller;
 
-    public DialogExample() {
+    public DialogWindow() {
 
        // this("title");
 
     }
 
-    public DialogExample(String title, Controller controller) {
+    public DialogWindow(String title, Controller controller) {
         this.controller = controller;
         this.title = title;
         JFrame f = new JFrame();
