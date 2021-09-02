@@ -13,7 +13,6 @@ public class SnakeTailBlock extends Block{
 
     @Override
     public void paintBlock(Graphics g, int length, int height) {
-        // zatila iba flipuje
 
 
         AffineTransform backup;

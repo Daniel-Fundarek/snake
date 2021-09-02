@@ -8,7 +8,7 @@ import java.awt.geom.AffineTransform;
 
 abstract public class Block {
     @Getter@Setter
-    int turn =0;
+    private int turn =0;
     @Getter
     private int offset = 50;
     @Setter

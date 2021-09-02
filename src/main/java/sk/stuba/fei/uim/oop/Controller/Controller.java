@@ -22,34 +22,34 @@ import java.util.*;
 public class Controller {
     private final int LENGTH = 10;
     private final int HEIGHT = 5;
-    Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
-    Block[][] board = new Block[LENGTH][HEIGHT];
-    ArrayList<Block> snake = new ArrayList<>();
-    Direction direction = Direction.RIGHT;
-    Direction prevDir = direction;
-    Canvas canvas;
-    MainFrame frame;
-    Random random = new Random();
-    FoodBlock food;
-    Image curvedSnakeBodyImage;
-    Image straightSnakeBodyImage;
-    Image snakeHeadImage;
-    Image foodImage;
-    Image emptyBlockImage;
-    Image backgroundImage;
-    Image grassImage;
-    Image straightTail;
-    Image curvedTail;
-    Image headTail;
-    Background background;
-    Timer timer;
-    int snakeTurn = 0;
+    private Block[][] emptyBoard = new Block[LENGTH][HEIGHT];
+    private Block[][] board = new Block[LENGTH][HEIGHT];
+    private ArrayList<Block> snake = new ArrayList<>();
+    private Direction direction = Direction.RIGHT;
+    private Direction prevDir = direction;
+    private Canvas canvas;
+    private MainFrame frame;
+    private Random random = new Random();
+    private FoodBlock food;
+    private Image curvedSnakeBodyImage;
+    private Image straightSnakeBodyImage;
+    private Image snakeHeadImage;
+    private Image foodImage;
+    private Image emptyBlockImage;
+    private Image backgroundImage;
+    private Image grassImage;
+    private Image straightTail;
+    private Image curvedTail;
+    private Image headTail;
+    private Background background;
+    private Timer timer;
+    private int snakeTurn = 0;
     @Setter@Getter
-    Boolean dialogResetVar = false;
-    DialogWindow dialog = new DialogWindow("End dialog window", this);
+    private Boolean dialogResetVar = false;
+    private DialogWindow dialog = new DialogWindow("End dialog window", this);
 
 
-    int delay = 500;
+    private int delay = 500;
     ActionListener taskPerformer = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
@@ -120,7 +120,7 @@ public class Controller {
     }
 
 
-    Block[][] createDeepCopy(Block[][] old, Block[][] curr){
+    private Block[][] createDeepCopy(Block[][] old, Block[][] curr){
 
 
         for(int y = 0; y< board.length; y++){
@@ -129,10 +129,10 @@ public class Controller {
         return curr;
     }
 
-    void addFood(){
+    private void addFood(){
         board[food.getX()][food.getY()] = food;
     }
-    void generateFood(){
+    private void generateFood(){
 
        /* ArrayList<Integer> excluded = new ArrayList<>();
         for (Block block : snake){
@@ -145,7 +145,7 @@ public class Controller {
         //food = new FoodBlock(board[y][x].getX(),board[y][x].getY(), foodImage);*/
         food = generateRandom();
     }
-    void checkCollision() {
+    private void checkCollision() {
         int x = snake.get(0).getX() + direction.getX();
         int y = snake.get(0).getY() + direction.getY();
         if ( x == LENGTH || y == HEIGHT || x == -1 || y == -1){
@@ -202,7 +202,7 @@ public class Controller {
 
     }
 
-    public FoodBlock generateRandomTestUnfinished() {
+    public FoodBlock generateRandomTestUnfinished() { // i have to update generate random to be sufficient for other types of blocks (hole or danger block)
         ArrayList<FoodBlock> array = new ArrayList<>();
         for (int y = 0; y < HEIGHT;y++){
             for(int x =0; x < LENGTH;x++){
@@ -223,7 +223,7 @@ public class Controller {
 
     }
 
-    void printBoard(Block[][] board){
+    private void printBoard(Block[][] board){
 
         for (Block[] blocks : board) {
             for (Block block : blocks) {
@@ -245,30 +245,30 @@ public class Controller {
         System.out.println();
     }
 
-    void createEmptyBoard(){
+    private void createEmptyBoard(){
         for(int y = 0; y< HEIGHT; y++){
             for(int x = 0;x < LENGTH; x++){
             emptyBoard[x][y] = new EmptyBlock(x,y,emptyBlockImage);
             }
         }
     }
-    void copyBoard(){
+    private void copyBoard(){
         board = emptyBoard.clone();
     }
 
-    void addSnakeHead(){
+    private void addSnakeHead(){
         int x = 1; // remake for randomness
         int y = 1;
         snake.add(new SnakeHeadBlock(x,y,snakeHeadImage));
     }
 
-    void addSnakeToBoard(){
+    private void addSnakeToBoard(){
         for (Block snakeBlock : snake){
             board[snakeBlock.getX()][snakeBlock.getY()] = snakeBlock;
         }
     }
 
-    void moveSnake(){
+    private void moveSnake(){
         int x = snake.get(0).getX();
         int y = snake.get(0).getY();
         Double angle = snake.get(0).getAngle();
@@ -289,7 +289,7 @@ public class Controller {
 
 
     }
-    void addTail(){ // add  last
+    private void addTail(){ // add  last
         Block block;
         block = snake.get(snake.size()-1);
         if (snake.size()>1) {
@@ -320,11 +320,11 @@ public class Controller {
             block.setImage(headTail); // head with tail
         }
     }
-    void eraseSnakeEnd(){
+    private void eraseSnakeEnd(){
         snake.remove(snake.size()-1);
     }
 
-    void movementDecider(){
+    private void movementDecider(){
         // riesi aby sa nedalo ist oproti o 180 stupnov
         int diffX = direction.getX() + prevDir.getX();
         int diffY  = direction.getY() + prevDir.getY();
@@ -337,7 +337,7 @@ public class Controller {
             prevDir = direction;
         }
     }
-    void TurnDecider(){
+    private void TurnDecider(){
         if (direction.getEval() == prevDir.getEval()){
             snakeTurn = 0;
         }

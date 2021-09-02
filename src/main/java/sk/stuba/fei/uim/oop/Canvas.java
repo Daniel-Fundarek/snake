@@ -10,11 +10,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
-    int RESOLUTIONX = 1800;//1800
-    int RESOLUTIONY = 900;
-    Block[][] board;
-    int length, height;
-    Background bg;
+    private int RESOLUTIONX = 1800;//1800
+    private int RESOLUTIONY = 900;
+    private Block[][] board;
+    private int length, height;
+    private Background bg;
     public Canvas(Block[][] board, int length, int height, Background bg) { // odstranit zbytocny length a height
         this.board = board;
         this.length = RESOLUTIONX/length;

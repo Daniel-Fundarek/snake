@@ -15,9 +15,9 @@ public class DialogWindow implements ActionListener {
     private String title = "";
     @Getter@Setter
     private Boolean resetVar = false;
-    JButton b = new JButton("Restart");
-    JButton c = new JButton("Exit");
-    Controller controller;
+    private JButton b = new JButton("Restart");
+    private JButton c = new JButton("Exit");
+    private Controller controller;
 
     public DialogWindow() {
 
