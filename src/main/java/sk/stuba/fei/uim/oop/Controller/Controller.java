@@ -143,7 +143,7 @@ public class Controller {
         int y = rand / LENGTH;
         System.out.println(foodImage.getClass());
         //food = new FoodBlock(board[y][x].getX(),board[y][x].getY(), foodImage);*/
-        food = generateRandom1();
+        food = generateRandom();
     }
     void checkCollision() {
         int x = snake.get(0).getX() + direction.getX();
@@ -179,27 +179,9 @@ public class Controller {
 
     }
 
-    public int generateRandom() { // blbost asi
-        ArrayList<Block> array = new ArrayList<>();
-        for (int y = 0; y < LENGTH;y++){
-            for(int x =0; x < HEIGHT;x++){
-                array.add(new EmptyBlock(x,y, emptyBlockImage));
-            }
-        }
-        for (Block block : snake){
-            for(int i = array.size()-1;i >= 0;i--){
-                if(array.get(i).getX()== block.getX() && array.get(i).getY() == block.getY()){
-                    array.remove(i);
-                    break;
-                }
-            }
-        }
-        int rand = random.nextInt(array.size());
-        return array.get(rand).getX()+ array.get(rand).getY()*LENGTH;
 
-    }
 
-    public FoodBlock generateRandom1() {
+    public FoodBlock generateRandom() {
         ArrayList<FoodBlock> array = new ArrayList<>();
         for (int y = 0; y < HEIGHT;y++){
             for(int x =0; x < LENGTH;x++){
@@ -220,7 +202,7 @@ public class Controller {
 
     }
 
-    public FoodBlock generateRandom2() {
+    public FoodBlock generateRandomTestUnfinished() {
         ArrayList<FoodBlock> array = new ArrayList<>();
         for (int y = 0; y < HEIGHT;y++){
             for(int x =0; x < LENGTH;x++){
